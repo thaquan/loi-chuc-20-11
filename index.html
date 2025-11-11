@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lời Chúc Đặc Biệt 20/10 💖</title>
+    <title>Lời Chúc Đặc Biệt 20/11 📚</title>
     <style>
         /* --- FONT & MÀU CHỦ ĐẠO --- */
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
 
         :root {
-            --pink: #e91e63;
-            --light-pink: #fce4ec;
-            --deep-pink: #c2185b;
-            --text-color: #333;
+            --primary: #ff6b35;
+            --secondary: #4ecdc4;
+            --light-bg: #f7f9fb;
+            --deep-orange: #e55234;
+            --green: #2ecc71;
+            --text-color: #2c3e50;
         }
 
         /* --- NỀN & CĂN GIỮA --- */
@@ -23,7 +25,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ffe3f0, #f8bbd0);
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0, #74b9ff);
             overflow: hidden;
             color: var(--text-color);
         }
@@ -52,7 +54,7 @@
         .prompt-container h2 {
             font-family: 'Great Vibes', cursive;
             font-size: 42px;
-            color: var(--deep-pink);
+            color: var(--deep-orange);
             margin-bottom: 30px;
             animation: fadeIn 1s ease forwards;
         }
@@ -67,7 +69,7 @@
             width: 90%;
             padding: 15px 25px;
             font-size: 18px;
-            border: 2px solid #f8c4d8;
+            border: 2px solid #ffd89b;
             border-radius: 50px;
             margin-bottom: 25px;
             font-weight: 600;
@@ -79,18 +81,18 @@
 
         .prompt-container input:focus {
             outline: none;
-            border-color: var(--pink);
-            box-shadow: 0 0 0 5px rgba(233, 30, 99, 0.15);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 5px rgba(255, 107, 53, 0.15);
         }
 
         .prompt-container input::placeholder {
-            color: #f09bb8;
+            color: #fdcb6e;
             font-style: italic;
         }
 
         /* --- NÚT BẤM NÂNG CẤP --- */
         .prompt-container button {
-            background: linear-gradient(135deg, var(--pink), var(--deep-pink));
+            background: linear-gradient(135deg, var(--primary), var(--deep-orange));
             color: white;
             padding: 15px 35px;
             border: none;
@@ -99,12 +101,12 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.35);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
         }
 
         .prompt-container button:hover {
             transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.5);
+            box-shadow: 0 12px 30px rgba(255, 107, 53, 0.5);
         }
 
         /* --- THẺ CHÚC MỪNG --- */
@@ -115,25 +117,25 @@
         .card h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 60px;
-            color: var(--pink);
+            color: var(--primary);
             margin-bottom: 10px;
             animation: glow 2s infinite alternate;
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 10px #f8bbd0; }
-            to { text-shadow: 0 0 20px #e91e63, 0 0 30px #f06292; }
+            from { text-shadow: 0 0 10px #ffd89b; }
+            to { text-shadow: 0 0 20px #ff6b35, 0 0 30px #fdcb6e; }
         }
 
         .card .recipient-name {
             font-size: 26px;
             font-weight: 600;
-            color: var(--deep-pink);
+            color: var(--deep-orange);
             margin-bottom: 25px;
         }
 
         .card .recipient-name span {
-            color: var(--pink);
+            color: var(--primary);
             font-style: italic;
         }
 
@@ -141,15 +143,15 @@
             font-size: 18px;
             line-height: 1.8;
             color: #555;
-            background: #fff4fa;
+            background: #fffbf0;
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.05);
             animation: fadeIn 1s ease forwards;
         }
 
-        /* --- HOA RƠI --- */
-        .flower-container {
+        /* --- ICON RƠI --- */
+        .icon-container {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
@@ -157,7 +159,7 @@
             z-index: 1;
         }
 
-        .flower {
+        .falling-icon {
             position: absolute;
             top: -50px;
             font-size: 24px;
@@ -186,21 +188,19 @@
 </head>
 <body>
 
-    <div class="flower-container" id="flower-container"></div>
+    <div class="icon-container" id="icon-container"></div>
 
     <div class="poppable prompt-container" id="prompt-container">
-        <h2>Bạn là ai thế? 💕</h2>
-        <input type="text" id="nameInput" placeholder="...gõ tên của bạn ở đây...">
-        <button id="submitButton">xem thử điều kỳ diệu 🌸</button>
+        <h2>Thầy/Cô là ai thế? 📖</h2>
+        <input type="text" id="nameInput" placeholder="...gõ tên Thầy/Cô ở đây...">
+        <button id="submitButton">Xem lời chúc dành riêng 🎓</button>
     </div>
 
     <div class="card poppable" id="main-card">
-        <h1>💐 Chúc Mừng 20/10! 💐</h1>
-        <p class="recipient-name fade-up">Gửi <span id="recipientName">...</span> thân mến 💖</p>
-        <p class="message fade-up">
-            Chúc cậu có một ngày 20/10 thật zui zẻ, hạnh phúc, luôn nở nụ cười trên môi
-            Tớ tin là dù ngày nào đi chăng nữa thì cậu vẫn luôn xinh đẹp như vậy
-            Bởi lẽ phụ nữ dù ở ngày nào họ cũng là một đóa hoa hồng 🌷✨
+        <h1>📚 Chúc Mừng 20/11! 📚</h1>
+        <p class="recipient-name fade-up">Kính gửi <span id="recipientName">...</span> 🌟</p>
+        <p class="message fade-up" id="wishMessage">
+            <!-- Lời chúc sẽ được random ở đây -->
         </p>
     </div>
 
@@ -211,30 +211,55 @@
             const promptContainer = document.getElementById('prompt-container');
             const card = document.getElementById('main-card');
             const recipientName = document.getElementById('recipientName');
-            const flowerContainer = document.getElementById('flower-container');
-            const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼', '💮'];
+            const wishMessage = document.getElementById('wishMessage');
+            const iconContainer = document.getElementById('icon-container');
+            const icons = ['📚', '📖', '✏️', '🎓', '🏆', '⭐', '🌟', '💐', '🌸'];
 
-            function createFlower() {
-                const flower = document.createElement('div');
-                flower.classList.add('flower');
-                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-                flower.style.left = Math.random() * 100 + 'vw';
-                flower.style.fontSize = Math.random() * 20 + 15 + 'px';
-                flower.style.animationDuration = Math.random() * 5 + 5 + 's';
-                flower.style.animationDelay = Math.random() * 2 + 's';
-                flowerContainer.appendChild(flower);
-                setTimeout(() => flower.remove(), 10000);
+            // Danh sách lời chúc random
+            const wishes = [
+                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến Thầy/Cô lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn Thầy/Cô đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
+                
+                "Kính chúc Thầy/Cô ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của Thầy/Cô không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Thầy/Cô mãi là người thầy tuyệt vời nhất! 📚💖",
+                
+                "Chúc Thầy/Cô luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của Thầy/Cô! 🎓🌟",
+                
+                "Gửi Thầy/Cô người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn Thầy/Cô đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Thầy/Cô là niềm tự hào của chúng em! 🏆💫",
+                
+                "Nhân dịp 20/11, em chúc Thầy/Cô luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của Thầy/Cô sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu Thầy/Cô nhiều lắm! 💐🌈",
+                
+                "Chúc Thầy/Cô một ngày 20/11 thật ý nghĩa! Thầy/Cô không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về Thầy/Cô! 🌸✨",
+                
+                "Kính gửi Thầy/Cô, nhân ngày Nhà giáo Việt Nam, em chúc Thầy/Cô luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn Thầy/Cô đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
+                
+                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến Thầy/Cô. Chúc Thầy/Cô sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟"
+            ];
+
+            function createFallingIcon() {
+                const icon = document.createElement('div');
+                icon.classList.add('falling-icon');
+                icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + 'vw';
+                icon.style.fontSize = Math.random() * 20 + 15 + 'px';
+                icon.style.animationDuration = Math.random() * 5 + 5 + 's';
+                icon.style.animationDelay = Math.random() * 2 + 's';
+                iconContainer.appendChild(icon);
+                setTimeout(() => icon.remove(), 10000);
             }
 
-            setInterval(createFlower, 250);
+            setInterval(createFallingIcon, 250);
 
             function showWish() {
                 const name = nameInput.value.trim();
                 if (name === "") {
-                    alert("Bạn ơi, nhập tên trước đã nha 💞");
+                    alert("Thầy/Cô ơi, nhập tên trước đã nha 💞");
                     return;
                 }
+                
+                // Random lời chúc
+                const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+                
                 recipientName.textContent = name;
+                wishMessage.textContent = randomWish;
                 promptContainer.style.display = 'none';
                 card.style.display = 'block';
             }
