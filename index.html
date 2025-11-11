@@ -109,6 +109,26 @@
             box-shadow: 0 12px 30px rgba(255, 107, 53, 0.5);
         }
 
+        /* --- NÚT QUAY LẠI --- */
+        .back-button {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
+        }
+
         /* --- THẺ CHÚC MỪNG --- */
         .card {
             display: none;
@@ -191,8 +211,8 @@
     <div class="icon-container" id="icon-container"></div>
 
     <div class="poppable prompt-container" id="prompt-container">
-        <h2>Thầy/Cô là ai thế? 📖</h2>
-        <input type="text" id="nameInput" placeholder="...gõ tên Thầy/Cô ở đây...">
+        <h2>Món quà 20/11 📖</h2>
+        <input type="text" id="nameInput" placeholder="... Thầy/Cô gõ tên ở đây nha...">
         <button id="submitButton">Xem lời chúc dành riêng 🎓</button>
     </div>
 
@@ -202,12 +222,14 @@
         <p class="message fade-up" id="wishMessage">
             <!-- Lời chúc sẽ được random ở đây -->
         </p>
+        <button class="back-button" id="backButton">Quay lại 🔄</button>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.getElementById('nameInput');
             const submitButton = document.getElementById('submitButton');
+            const backButton = document.getElementById('backButton');
             const promptContainer = document.getElementById('prompt-container');
             const card = document.getElementById('main-card');
             const recipientName = document.getElementById('recipientName');
@@ -215,24 +237,146 @@
             const iconContainer = document.getElementById('icon-container');
             const icons = ['📚', '📖', '✏️', '🎓', '🏆', '⭐', '🌟', '💐', '🌸'];
 
-            // Danh sách lời chúc random
-            const wishes = [
-                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến Thầy/Cô lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn Thầy/Cô đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
-                
-                "Kính chúc Thầy/Cô ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của Thầy/Cô không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Thầy/Cô mãi là người thầy tuyệt vời nhất! 📚💖",
-                
-                "Chúc Thầy/Cô luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của Thầy/Cô! 🎓🌟",
-                
-                "Gửi Thầy/Cô người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn Thầy/Cô đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Thầy/Cô là niềm tự hào của chúng em! 🏆💫",
-                
-                "Nhân dịp 20/11, em chúc Thầy/Cô luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của Thầy/Cô sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu Thầy/Cô nhiều lắm! 💐🌈",
-                
-                "Chúc Thầy/Cô một ngày 20/11 thật ý nghĩa! Thầy/Cô không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về Thầy/Cô! 🌸✨",
-                
-                "Kính gửi Thầy/Cô, nhân ngày Nhà giáo Việt Nam, em chúc Thầy/Cô luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn Thầy/Cô đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
-                
-                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến Thầy/Cô. Chúc Thầy/Cô sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟"
+            // Danh sách tên nam phổ biến ở Việt Nam
+            const maleNames = [
+                'hùng', 'dũng', 'cường', 'tuấn', 'hiếu', 'minh', 'hoàng', 'khoa', 'quang', 'hải',
+                'nam', 'thành', 'đức', 'phong', 'long', 'sơn', 'tâm', 'bình', 'thắng', 'trung',
+                'anh', 'việt', 'quân', 'kiên', 'vũ', 'tùng', 'hưng', 'thịnh', 'đạt', 'phúc',
+                'tài', 'khang', 'phát', 'nghĩa', 'trí', 'toàn', 'thiện', 'lâm', 'huy', 'hào',
+                'linh', 'khánh', 'tiến', 'thái', 'phương', 'thanh', 'tín', 'nhân', 'hiệp', 'danh', 'cương', 'báu', 'tùng', 'duy'
             ];
+
+            // Danh sách tên nữ phổ biến ở Việt Nam
+            const femaleNames = [
+                'hoa', 'lan', 'hương', 'thảo', 'loan', 'nga', 'oanh', 'trang', 'dung', 'hằng',
+                'hà', 'mai', 'huyền', 'linh', 'nhung', 'tuyết', 'thu', 'xuân', 'yến', 'vân',
+                'thúy', 'diệu', 'my', 'như', 'phương', 'thanh', 'khanh', 'khánh', 'trâm', 'vy',
+                'quỳnh', 'hiền', 'phượng', 'ly', 'thư', 'giang', 'trinh', 'tâm', 'ngọc', 'châu',
+                'anh', 'bích', 'cẩm', 'diễm', 'hạnh', 'kim', 'lệ', 'minh', 'nhi', 'uyên', 'kim', 'chi', 'thủy', 'trúc', 'thu', 'tiên', 'ngân', 'quỳnh', 'lai'
+            ];
+
+            // Hàm nhận diện giới tính từ tên
+            function detectGender(fullName) {
+                const nameParts = fullName.toLowerCase().trim().split(' ');
+                const lastName = nameParts[nameParts.length - 1]; // Lấy tên (phần cuối)
+                
+                // Kiểm tra tên có trong danh sách nam
+                if (maleNames.includes(lastName)) {
+                    return 'male';
+                }
+                
+                // Kiểm tra tên có trong danh sách nữ
+                if (femaleNames.includes(lastName)) {
+                    return 'female';
+                }
+                
+                // Mặc định là thầy/cô nếu không xác định được
+                return 'neutral';
+            }
+
+            // Lời chúc cho thầy giáo (nam)
+            const maleWishes = [
+                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến thầy lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn thầy đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
+                
+                "Kính chúc thầy ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của thầy không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Thầy mãi là người thầy tuyệt vời nhất! 📚💖",
+                
+                "Chúc thầy luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của thầy! 🎓🌟",
+                
+                "Gửi thầy người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn thầy đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Thầy là niềm tự hào của chúng em! 🏆💫",
+                
+                "Nhân dịp 20/11, em chúc thầy luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của thầy sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu thầy nhiều lắm! 💐🌈",
+                
+                "Chúc thầy một ngày 20/11 thật ý nghĩa! Thầy không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về thầy! 🌸✨",
+                
+                "Kính gửi thầy, nhân ngày Nhà giáo Việt Nam, em chúc thầy luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn thầy đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
+                
+                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến thầy. Chúc thầy sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟",
+
+                "Thầy ơi, ngày 20/11 này em chúc thầy luôn tươi trẻ như ngày nào, nhiệt huyết với nghề và hạnh phúc bên gia đình. Cảm ơn thầy đã là ánh sáng dẫn đường cho chúng em! 🌺💕",
+
+                "Gửi thầy, người đã dạy em không chỉ kiến thức mà còn cách làm người. Chúc thầy ngày Nhà giáo 20/11 thật ý nghĩa, luôn mạnh khỏe và thành công! Em sẽ luôn nhớ ơn thầy! 🎯✨",
+
+                "Nhân ngày 20/11, em chúc thầy luôn giữ được ngọn lửa đam mê với nghề, sức khỏe dồi dào và gặp nhiều may mắn. Thầy là người thầy tuyệt vời nhất trong lòng em! 🔥🌟",
+
+                "Chúc mừng ngày Nhà giáo Việt Nam! Thầy không chỉ truyền đạt tri thức mà còn truyền cảm hứng cho em mỗi ngày. Chúc thầy luôn hạnh phúc và thành công rực rỡ! 🌈💖"
+            ];
+
+            // Lời chúc cho cô giáo (nữ)
+            const femaleWishes = [
+                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến cô lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn cô đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
+                
+                "Kính chúc cô ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của cô không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Cô mãi là người thầy tuyệt vời nhất! 📚💖",
+                
+                "Chúc cô luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của cô! 🎓🌟",
+                
+                "Gửi cô người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn cô đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Cô là niềm tự hào của chúng em! 🏆💫",
+                
+                "Nhân dịp 20/11, em chúc cô luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của cô sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu cô nhiều lắm! 💐🌈",
+                
+                "Chúc cô một ngày 20/11 thật ý nghĩa! Cô không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về cô! 🌸✨",
+                
+                "Kính gửi cô, nhân ngày Nhà giáo Việt Nam, em chúc cô luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn cô đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
+                
+                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến cô. Chúc cô sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟",
+
+                "Cô ơi, ngày 20/11 này em chúc cô luôn tươi trẻ như ngày nào, nhiệt huyết với nghề và hạnh phúc bên gia đình. Cảm ơn cô đã là ánh sáng dẫn đường cho chúng em! 🌺💕",
+
+                "Gửi cô, người đã dạy em không chỉ kiến thức mà còn cách làm người. Chúc cô ngày Nhà giáo 20/11 thật ý nghĩa, luôn mạnh khỏe và thành công! Em sẽ luôn nhớ ơn cô! 🎯✨",
+
+                "Nhân ngày 20/11, em chúc cô luôn giữ được ngọn lửa đam mê với nghề, sức khỏe dồi dào và gặp nhiều may mắn. Cô là người thầy tuyệt vời nhất trong lòng em! 🔥🌟",
+
+                "Chúc mừng ngày Nhà giáo Việt Nam! Cô không chỉ truyền đạt tri thức mà còn truyền cảm hứng cho em mỗi ngày. Chúc cô luôn hạnh phúc và thành công rực rỡ! 🌈💖"
+            ];
+
+            // Hàm tạo hash từ tên
+            function hashCode(str) {
+                let hash = 0;
+                for (let i = 0; i < str.length; i++) {
+                    const char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash);
+            }
+
+            // Hàm random có seed
+            function getRandomWishIndex(name, wishCount) {
+                const timestamp = Math.floor(Date.now() / 60000);
+                const nameHash = hashCode(name.toLowerCase().trim());
+                const seed = nameHash + timestamp;
+                const x = Math.sin(seed) * 10000;
+                const random = x - Math.floor(x);
+                return Math.floor(random * wishCount);
+            }
+
+            // Lấy lời chúc unique
+            function getUniqueWish(name, gender) {
+                const wishes = gender === 'male' ? maleWishes : femaleWishes;
+                const storageKey = 'wishHistory';
+                let history = JSON.parse(localStorage.getItem(storageKey) || '[]');
+                
+                if (history.length > 5) {
+                    history = history.slice(-5);
+                }
+
+                let wishIndex;
+                let attempts = 0;
+                const maxAttempts = 20;
+
+                do {
+                    wishIndex = getRandomWishIndex(name + attempts, wishes.length);
+                    attempts++;
+                } while (history.includes(wishIndex) && attempts < maxAttempts);
+
+                if (attempts >= maxAttempts) {
+                    wishIndex = Math.floor(Math.random() * wishes.length);
+                }
+
+                history.push(wishIndex);
+                localStorage.setItem(storageKey, JSON.stringify(history));
+
+                return wishes[wishIndex];
+            }
 
             function createFallingIcon() {
                 const icon = document.createElement('div');
@@ -255,16 +399,30 @@
                     return;
                 }
                 
-                // Random lời chúc
-                const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+                // Nhận diện giới tính
+                const gender = detectGender(name);
                 
-                recipientName.textContent = name;
+                // Lấy lời chúc phù hợp
+                const randomWish = getUniqueWish(name, gender);
+                
+                // Hiển thị tên với xưng hô phù hợp
+                const title = gender === 'male' ? 'Thầy' : (gender === 'female' ? 'Cô' : 'Thầy/Cô');
+                
+                recipientName.textContent = `${title} ${name}`;
                 wishMessage.textContent = randomWish;
                 promptContainer.style.display = 'none';
                 card.style.display = 'block';
             }
 
+            function goBack() {
+                card.style.display = 'none';
+                promptContainer.style.display = 'block';
+                nameInput.value = '';
+                nameInput.focus();
+            }
+
             submitButton.addEventListener('click', showWish);
+            backButton.addEventListener('click', goBack);
             nameInput.addEventListener('keypress', e => {
                 if (e.key === 'Enter') showWish();
             });
