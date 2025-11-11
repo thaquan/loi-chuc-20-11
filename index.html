@@ -1,211 +1,250 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lời Chúc Đặc Biệt 20/10 💖</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lời Chúc Đặc Biệt 20/10 💖</title>
+    <style>
+        /* --- FONT & MÀU CHỦ ĐẠO --- */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
 
-    :root {
-      --pink: #e91e63;
-      --light-pink: #fce4ec;
-      --deep-pink: #c2185b;
-      --text-color: #333;
-    }
+        :root {
+            --pink: #e91e63;
+            --light-pink: #fce4ec;
+            --deep-pink: #c2185b;
+            --text-color: #333;
+        }
 
-    body {
-      font-family: 'Quicksand', sans-serif;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #ffe3f0, #f8bbd0);
-      overflow: hidden;
-      color: var(--text-color);
-    }
+        /* --- NỀN & CĂN GIỮA --- */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe3f0, #f8bbd0);
+            overflow: hidden;
+            color: var(--text-color);
+        }
 
-    .poppable {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
-      padding: 45px 55px;
-      border-radius: 25px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
-      transform: scale(0.8);
-      opacity: 0;
-      animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    }
+        /* --- KHUNG CHÍNH POP --- */
+        .poppable {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            padding: 45px 55px;
+            border-radius: 25px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
 
-    @keyframes popIn {
-      0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
-      100% { transform: scale(1) rotate(0); opacity: 1; }
-    }
+        @keyframes popIn {
+            0% { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
 
-    .card h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 60px;
-      color: var(--pink);
-      margin-bottom: 10px;
-      animation: glow 2s infinite alternate;
-    }
+        /* --- TIÊU ĐỀ MỜI NHẬP --- */
+        .prompt-container h2 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            color: var(--deep-pink);
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease forwards;
+        }
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #f8bbd0; }
-      to { text-shadow: 0 0 20px #e91e63, 0 0 30px #f06292; }
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .card .recipient-name {
-      font-size: 26px;
-      font-weight: 600;
-      color: var(--deep-pink);
-      margin-bottom: 25px;
-    }
+        /* --- Ô NHẬP TÊN --- */
+        .prompt-container input {
+            width: 90%;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: 2px solid #f8c4d8;
+            border-radius: 50px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
 
-    .card .recipient-name span {
-      color: var(--pink);
-      font-style: italic;
-    }
+        .prompt-container input:focus {
+            outline: none;
+            border-color: var(--pink);
+            box-shadow: 0 0 0 5px rgba(233, 30, 99, 0.15);
+        }
 
-    .card .message {
-      font-size: 18px;
-      line-height: 1.8;
-      color: #555;
-      background: #fff4fa;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-      animation: fadeIn 1s ease forwards;
-    }
+        .prompt-container input::placeholder {
+            color: #f09bb8;
+            font-style: italic;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        /* --- NÚT BẤM NÂNG CẤP --- */
+        .prompt-container button {
+            background: linear-gradient(135deg, var(--pink), var(--deep-pink));
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.35);
+        }
 
-    /* Nút random quà */
-    .gift-btn {
-      margin-top: 30px;
-      background: linear-gradient(135deg, var(--pink), var(--deep-pink));
-      color: white;
-      padding: 15px 35px;
-      border: none;
-      border-radius: 50px;
-      font-size: 18px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.35);
-    }
+        .prompt-container button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.5);
+        }
 
-    .gift-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 12px 30px rgba(233, 30, 99, 0.5);
-    }
+        /* --- THẺ CHÚC MỪNG --- */
+        .card {
+            display: none;
+        }
 
-    .gift {
-      font-size: 24px;
-      margin-top: 20px;
-      animation: popGift 0.8s ease;
-    }
+        .card h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 60px;
+            color: var(--pink);
+            margin-bottom: 10px;
+            animation: glow 2s infinite alternate;
+        }
 
-    @keyframes popGift {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #f8bbd0; }
+            to { text-shadow: 0 0 20px #e91e63, 0 0 30px #f06292; }
+        }
 
-    /* Hoa rơi */
-    .flower-container {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
+        .card .recipient-name {
+            font-size: 26px;
+            font-weight: 600;
+            color: var(--deep-pink);
+            margin-bottom: 25px;
+        }
 
-    .flower {
-      position: absolute;
-      top: -50px;
-      font-size: 24px;
-      opacity: 0.8;
-      animation: fall linear forwards;
-    }
+        .card .recipient-name span {
+            color: var(--pink);
+            font-style: italic;
+        }
 
-    @keyframes fall {
-      to {
-        transform: translateY(105vh) rotate(360deg);
-        opacity: 0.4;
-      }
-    }
-  </style>
+        .card .message {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #555;
+            background: #fff4fa;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* --- HOA RƠI --- */
+        .flower-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .flower {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0.4;
+            }
+        }
+
+        /* --- HIỆU ỨNG CHỮ XUẤT HIỆN --- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="flower-container" id="flower-container"></div>
+    <div class="flower-container" id="flower-container"></div>
 
-  <div class="card poppable" id="main-card">
-    <h1>💐 Chúc Mừng 20/10! 💐</h1>
-    <p class="recipient-name fade-up">Gửi <span id="recipientName">Nguyễn Ngọc Diệp Thanh 💙</span> thân mến 💖</p>
-    <p class="message fade-up">
-      Chúc cậu có một ngày 20/10 thật vui vẻ, hạnh phúc, luôn nở nụ cười trên môi.
-      Tớ tin là dù ngày nào đi chăng nữa thì cậu vẫn luôn xinh đẹp như vậy —
-      bởi lẽ phụ nữ dù ở ngày nào họ cũng là một đóa hoa hồng 🌷✨
-    </p>
+    <div class="poppable prompt-container" id="prompt-container">
+        <h2>Bạn là ai thế? 💕</h2>
+        <input type="text" id="nameInput" placeholder="...gõ tên của bạn ở đây...">
+        <button id="submitButton">xem thử điều kỳ diệu 🌸</button>
+    </div>
 
-    <button class="gift-btn" id="giftBtn">Nhấn vào đi cậu 🎁</button>
-    <div class="gift" id="giftDisplay"></div>
-  </div>
+    <div class="card poppable" id="main-card">
+        <h1>💐 Chúc Mừng 20/10! 💐</h1>
+        <p class="recipient-name fade-up">Gửi <span id="recipientName">...</span> thân mến 💖</p>
+        <p class="message fade-up">
+            Chúc cậu có một ngày 20/10 thật zui zẻ, hạnh phúc, luôn nở nụ cười trên môi
+            Tớ tin là dù ngày nào đi chăng nữa thì cậu vẫn luôn xinh đẹp như vậy
+            Bởi lẽ phụ nữ dù ở ngày nào họ cũng là một đóa hoa hồng 🌷✨
+        </p>
+    </div>
 
-  <script>
-    // Đợi toàn bộ trang load xong rồi mới chạy script
-    window.addEventListener('load', () => {
-      console.log('Script started — DOM fully loaded');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nameInput = document.getElementById('nameInput');
+            const submitButton = document.getElementById('submitButton');
+            const promptContainer = document.getElementById('prompt-container');
+            const card = document.getElementById('main-card');
+            const recipientName = document.getElementById('recipientName');
+            const flowerContainer = document.getElementById('flower-container');
+            const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼', '💮'];
 
-      const flowerContainer = document.getElementById('flower-container');
-      const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼', '💮'];
+            function createFlower() {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.fontSize = Math.random() * 20 + 15 + 'px';
+                flower.style.animationDuration = Math.random() * 5 + 5 + 's';
+                flower.style.animationDelay = Math.random() * 2 + 's';
+                flowerContainer.appendChild(flower);
+                setTimeout(() => flower.remove(), 10000);
+            }
 
-      function createFlower() {
-        const flower = document.createElement('div');
-        flower.classList.add('flower');
-        flower.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
-        flower.style.left = Math.random() * 100 + 'vw';
-        flower.style.fontSize = Math.random() * 20 + 15 + 'px';
-        flower.style.animationDuration = Math.random() * 5 + 5 + 's';
-        flower.style.animationDelay = Math.random() * 2 + 's';
-        flowerContainer.appendChild(flower);
-        setTimeout(() => flower.remove(), 10000);
-      }
-      setInterval(createFlower, 250);
+            setInterval(createFlower, 250);
 
-      const gifts = [
-        "💐 Một bó hoa hồng!",
-        "🍫 Một thanh socola!",
-        "☕ Một ly trà sữa!",
-        "Chúc bạn may mắn lần sau nhé! 🎲"
-      ];
+            function showWish() {
+                const name = nameInput.value.trim();
+                if (name === "") {
+                    alert("Bạn ơi, nhập tên trước đã nha 💞");
+                    return;
+                }
+                recipientName.textContent = name;
+                promptContainer.style.display = 'none';
+                card.style.display = 'block';
+            }
 
-      const giftBtn = document.getElementById('giftBtn');
-      const giftDisplay = document.getElementById('giftDisplay');
+            submitButton.addEventListener('click', showWish);
+            nameInput.addEventListener('keypress', e => {
+                if (e.key === 'Enter') showWish();
+            });
+        });
+    </script>
 
-      if (!giftBtn || !giftDisplay) {
-        console.error('Không tìm thấy phần tử giftBtn hoặc giftDisplay.');
-        return;
-      }
-
-      giftBtn.addEventListener('click', () => {
-        console.log('Gift button clicked');
-        const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
-        giftDisplay.textContent = randomGift;
-
-        // reset animation để hiệu ứng hiện lại mỗi lần click
-        giftDisplay.style.animation = 'none';
-        void giftDisplay.offsetWidth; // trigger reflow
-        giftDisplay.style.animation = 'popGift 0.8s ease';
-      });
-    });
-  </script>
 </body>
 </html>
