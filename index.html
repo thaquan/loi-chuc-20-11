@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lời Chúc Đặc Biệt 20/11 📚</title>
+    
+    <!-- html2canvas cho chức năng chụp ảnh -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         /* --- FONT & MÀU CHỦ ĐẠO --- */
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap');
@@ -17,17 +21,56 @@
             --text-color: #2c3e50;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         /* --- NỀN & CĂN GIỮA --- */
         body {
             font-family: 'Quicksand', sans-serif;
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ffeaa7, #fab1a0, #74b9ff);
-            overflow: hidden;
+            overflow-x: hidden;
             color: var(--text-color);
+            position: relative;
+        }
+
+        /* --- NÚT ĐIỀU KHIỂN NHẠC --- */
+        .music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-control.playing {
+            background: linear-gradient(135deg, var(--primary), var(--deep-orange));
+            color: white;
+        }
+
+        .music-icon {
+            font-size: 24px;
         }
 
         /* --- KHUNG CHÍNH POP --- */
@@ -43,6 +86,8 @@
             transform: scale(0.8);
             opacity: 0;
             animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            position: relative;
+            z-index: 10;
         }
 
         @keyframes popIn {
@@ -91,7 +136,7 @@
         }
 
         /* --- NÚT BẤM NÂNG CẤP --- */
-        .prompt-container button {
+        .prompt-container button, .action-btn {
             background: linear-gradient(135deg, var(--primary), var(--deep-orange));
             color: white;
             padding: 15px 35px;
@@ -102,9 +147,10 @@
             cursor: pointer;
             transition: all 0.4s ease;
             box-shadow: 0 8px 20px rgba(255, 107, 53, 0.35);
+            font-family: 'Quicksand', sans-serif;
         }
 
-        .prompt-container button:hover {
+        .prompt-container button:hover, .action-btn:hover {
             transform: translateY(-4px) scale(1.05);
             box-shadow: 0 12px 30px rgba(255, 107, 53, 0.5);
         }
@@ -122,11 +168,41 @@
             margin-top: 20px;
             transition: all 0.4s ease;
             box-shadow: 0 6px 15px rgba(108, 117, 125, 0.3);
+            font-family: 'Quicksand', sans-serif;
         }
 
         .back-button:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 10px 25px rgba(108, 117, 125, 0.4);
+        }
+
+        /* --- ACTION BUTTONS --- */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn.share-btn {
+            background: linear-gradient(135deg, #3b5998, #4267B2);
+        }
+
+        .action-btn.download-btn {
+            background: linear-gradient(135deg, var(--green), #27ae60);
+        }
+
+        .action-btn.copy-btn {
+            background: linear-gradient(135deg, var(--secondary), #45b7d1);
         }
 
         /* --- THẺ CHÚC MỪNG --- */
@@ -167,7 +243,23 @@
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-            animation: fadeIn 1s ease forwards;
+            min-height: 150px;
+            position: relative;
+        }
+
+        /* --- TYPING CURSOR --- */
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background-color: var(--primary);
+            margin-left: 2px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
         /* --- ICON RƠI --- */
@@ -194,6 +286,36 @@
             }
         }
 
+        /* --- PHÁO HOA --- */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: firework-explosion 1s ease-out forwards;
+        }
+
+        @keyframes firework-explosion {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
         /* --- HIỆU ỨNG CHỮ XUẤT HIỆN --- */
         .fade-up {
             opacity: 0;
@@ -204,15 +326,55 @@
         @keyframes fadeUp {
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .poppable {
+                padding: 30px 25px;
+                width: 95%;
+            }
+
+            .card h1 {
+                font-size: 45px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                width: 100%;
+            }
+
+            .music-control {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                right: 15px;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Điều khiển nhạc -->
+    <div class="music-control" id="musicControl" title="Bật/Tắt nhạc nền">
+        <span class="music-icon">🔇</span>
+    </div>
+
+    <!-- Audio nhạc nền -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-memories.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Container pháo hoa -->
+    <div class="fireworks-container" id="fireworksContainer"></div>
+
     <div class="icon-container" id="icon-container"></div>
 
     <div class="poppable prompt-container" id="prompt-container">
-        <h2>Món quà 20/11 📖</h2>
-        <input type="text" id="nameInput" placeholder="... Thầy/Cô gõ tên ở đây nha...">
+        <h2>Thầy/Cô là ai thế? 📖</h2>
+        <input type="text" id="nameInput" placeholder="...gõ tên Thầy/Cô ở đây...">
         <button id="submitButton">Xem lời chúc dành riêng 🎓</button>
     </div>
 
@@ -220,8 +382,22 @@
         <h1>📚 Chúc Mừng 20/11! 📚</h1>
         <p class="recipient-name fade-up">Kính gửi <span id="recipientName">...</span> 🌟</p>
         <p class="message fade-up" id="wishMessage">
-            <!-- Lời chúc sẽ được random ở đây -->
+            <!-- Lời chúc sẽ được typing ở đây -->
         </p>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="action-btn download-btn" id="downloadBtn">
+                📸 Lưu ảnh
+            </button>
+            <button class="action-btn share-btn" id="shareBtn">
+                📤 Chia sẻ
+            </button>
+            <button class="action-btn copy-btn" id="copyBtn">
+                📋 Copy link
+            </button>
+        </div>
+        
         <button class="back-button" id="backButton">Quay lại 🔄</button>
     </div>
 
@@ -230,152 +406,293 @@
             const nameInput = document.getElementById('nameInput');
             const submitButton = document.getElementById('submitButton');
             const backButton = document.getElementById('backButton');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const shareBtn = document.getElementById('shareBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const musicControl = document.getElementById('musicControl');
+            const bgMusic = document.getElementById('bgMusic');
             const promptContainer = document.getElementById('prompt-container');
             const card = document.getElementById('main-card');
             const recipientName = document.getElementById('recipientName');
             const wishMessage = document.getElementById('wishMessage');
             const iconContainer = document.getElementById('icon-container');
+            const fireworksContainer = document.getElementById('fireworksContainer');
             const icons = ['📚', '📖', '✏️', '🎓', '🏆', '⭐', '🌟', '💐', '🌸'];
 
-            // Danh sách tên nam phổ biến ở Việt Nam
-            const maleNames = [
-                'hùng', 'dũng', 'cường', 'tuấn', 'hiếu', 'minh', 'hoàng', 'khoa', 'quang', 'hải',
-                'nam', 'thành', 'đức', 'phong', 'long', 'sơn', 'tâm', 'bình', 'thắng', 'trung',
-                'anh', 'việt', 'quân', 'kiên', 'vũ', 'tùng', 'hưng', 'thịnh', 'đạt', 'phúc',
-                'tài', 'khang', 'phát', 'nghĩa', 'trí', 'toàn', 'thiện', 'lâm', 'huy', 'hào',
-                'linh', 'khánh', 'tiến', 'thái', 'phương', 'thanh', 'tín', 'nhân', 'hiệp', 'danh', 'cương', 'báu', 'tùng', 'duy'
-            ];
+            let typingTimeout;
+            let isPlaying = false;
 
-            // Danh sách tên nữ phổ biến ở Việt Nam
-            const femaleNames = [
-                'hoa', 'lan', 'hương', 'thảo', 'loan', 'nga', 'oanh', 'trang', 'dung', 'hằng',
-                'hà', 'mai', 'huyền', 'linh', 'nhung', 'tuyết', 'thu', 'xuân', 'yến', 'vân',
-                'thúy', 'diệu', 'my', 'như', 'phương', 'thanh', 'khanh', 'khánh', 'trâm', 'vy',
-                'quỳnh', 'hiền', 'phượng', 'ly', 'thư', 'giang', 'trinh', 'tâm', 'ngọc', 'châu',
-                'anh', 'bích', 'cẩm', 'diễm', 'hạnh', 'kim', 'lệ', 'minh', 'nhi', 'uyên', 'kim', 'chi', 'thủy', 'trúc', 'thu', 'tiên', 'ngân', 'quỳnh', 'lai'
-            ];
-
-            // Hàm nhận diện giới tính từ tên
-            function detectGender(fullName) {
-                const nameParts = fullName.toLowerCase().trim().split(' ');
-                const lastName = nameParts[nameParts.length - 1]; // Lấy tên (phần cuối)
-                
-                // Kiểm tra tên có trong danh sách nam
-                if (maleNames.includes(lastName)) {
-                    return 'male';
-                }
-                
-                // Kiểm tra tên có trong danh sách nữ
-                if (femaleNames.includes(lastName)) {
-                    return 'female';
-                }
-                
-                // Mặc định là thầy/cô nếu không xác định được
-                return 'neutral';
+            // === Utility: normalize string (remove accents, lower-case) ===
+            function normalizeStr(s) {
+                if (!s) return '';
+                return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
             }
 
-            // Lời chúc cho thầy giáo (nam)
-            const maleWishes = [
-                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến thầy lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn thầy đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
-                
-                "Kính chúc thầy ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của thầy không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Thầy mãi là người thầy tuyệt vời nhất! 📚💖",
-                
-                "Chúc thầy luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của thầy! 🎓🌟",
-                
-                "Gửi thầy người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn thầy đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Thầy là niềm tự hào của chúng em! 🏆💫",
-                
-                "Nhân dịp 20/11, em chúc thầy luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của thầy sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu thầy nhiều lắm! 💐🌈",
-                
-                "Chúc thầy một ngày 20/11 thật ý nghĩa! Thầy không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về thầy! 🌸✨",
-                
-                "Kính gửi thầy, nhân ngày Nhà giáo Việt Nam, em chúc thầy luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn thầy đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
-                
-                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến thầy. Chúc thầy sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟",
-
-                "Thầy ơi, ngày 20/11 này em chúc thầy luôn tươi trẻ như ngày nào, nhiệt huyết với nghề và hạnh phúc bên gia đình. Cảm ơn thầy đã là ánh sáng dẫn đường cho chúng em! 🌺💕",
-
-                "Gửi thầy, người đã dạy em không chỉ kiến thức mà còn cách làm người. Chúc thầy ngày Nhà giáo 20/11 thật ý nghĩa, luôn mạnh khỏe và thành công! Em sẽ luôn nhớ ơn thầy! 🎯✨",
-
-                "Nhân ngày 20/11, em chúc thầy luôn giữ được ngọn lửa đam mê với nghề, sức khỏe dồi dào và gặp nhiều may mắn. Thầy là người thầy tuyệt vời nhất trong lòng em! 🔥🌟",
-
-                "Chúc mừng ngày Nhà giáo Việt Nam! Thầy không chỉ truyền đạt tri thức mà còn truyền cảm hứng cho em mỗi ngày. Chúc thầy luôn hạnh phúc và thành công rực rỡ! 🌈💖"
+            // === DỮ LIỆU THẦY CÔ VÀ LỜI CHÚC ===
+            const teacherData = [
+                {
+                    keywords: ['mai dang khoa', 'khoa', 'ts mai dang khoa', 'ts. mai dang khoa'],
+                    fullName: 'TS. Mai Đăng Khoa',
+                    gender: 'male',
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy vì những bài giảng bổ ích và đầy tâm huyết. Dù Thầy có đôi lúc nghiêm khắc, nhưng chính sự nghiêm túc và tận tâm ấy đã giúp chúng em trưởng thành và hoàn thiện hơn trong học tập. Chúng em luôn trân trọng những kiến thức quý giá mà Thầy đã truyền đạt, không chỉ trong chuyên môn mà còn trong cách sống và làm việc. Mong Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục gặt hái nhiều thành công hơn nữa trong sự nghiệp giảng dạy. Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
+                },
+                {
+                    keywords: ['nguyen van bau', 'bau', 'ts nguyen van bau', 'ts. nguyen van bau', 'van bau'],
+                    fullName: 'TS. Nguyễn Văn Báu',
+                    gender: 'male',
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy đã luôn tận tâm dẫn dắt và hỗ trợ lớp chúng em trong suốt quá trình học tập. Chúng em luôn cảm nhận được sự quan tâm và tâm huyết của Thầy đối với sự phát triển của ngành cũng như của từng sinh viên. Chúng em rất biết ơn sự lãnh đạo và những đóng góp của Thầy cho khoa và cho các lớp. Mong Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục đạt được nhiều thành công hơn nữa trong công việc và cuộc sống! Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
+                },
+                {
+                    keywords: ['hoang quang cuong', 'cuong', 'ths hoang quang cuong', 'ths. hoang quang cuong', 'quang cuong'],
+                    fullName: 'ThS. Hoàng Quang Cương',
+                    gender: 'male',
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy đã tận tâm giảng dạy và chia sẻ những kiến thức quý báu trong suốt thời gian qua. Những bài học của Thầy không chỉ giúp chúng em vững vàng hơn trong chuyên môn mà còn mở rộng thêm tầm nhìn và hiểu biết về nhiều vấn đề quan trọng trong công việc và cuộc sống. Chúng em luôn trân trọng những giá trị Thầy đã mang lại cho lớp, và cảm ơn Thầy vì sự nhiệt huyết, kiên nhẫn và sự quan tâm đặc biệt dành cho từng sinh viên. Chúc Thầy luôn khỏe mạnh, hạnh phúc, và tiếp tục gặt hái thêm nhiều thành công trong sự nghiệp giảng dạy. Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
+                },
+                {
+                    keywords: ['tran ba hung', 'hung', 'ts tran ba hung', 'ts. tran ba hung', 'ba hung'],
+                    fullName: 'TS. Trần Bá Hùng',
+                    gender: 'male',
+                    wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin gửi đến Thầy lời tri ân sâu sắc. Chúng em cảm ơn Thầy vì sự tận tâm giảng dạy và những kiến thức quý báu đã truyền đạt trong suốt thời gian qua. Những bài học của Thầy không chỉ củng cố chuyên môn mà còn mở rộng tư duy và hiểu biết của chúng em về công việc và cuộc sống. Chúng em trân trọng sự nhiệt huyết, kiên trì và sự quan tâm Thầy dành cho từng sinh viên. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục gặt hái nhiều thành công trong sự nghiệp trồng người.'
+                },
+                {
+                    keywords: ['phan thi cam lai', 'cam lai', 'ts phan thi cam lai', 'ts. phan thi cam lai', 'lai'],
+                    fullName: 'TS. Phan Thị Cẩm Lai',
+                    gender: 'female',
+                    wish: 'Nhân ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin kính chúc Cô thật nhiều niềm vui, hạnh phúc và tiếp tục gặt hái nhiều thành công trong sự nghiệp cao quý của mình. Trong suốt quá trình học tập môn học Tư tưởng Hồ Chí Minh, chúng em thật may mắn khi được học tập và đồng hành cùng cô - Giảng viên tận tâm, dịu dàng và gần gũi. Cảm ơn Cô vì luôn quan tâm, thấu hiểu, đồng hành cùng chúng em trong quá trình học tập. Chúng em xin kính chúc Cô luôn mạnh khỏe, tươi trẻ và tiếp tục truyền cảm hứng cho nhiều thế hệ sinh viên sau này.'
+                },
+                {
+                    keywords: ['nguyen thi hong nhung', 'hong nhung', 'ts nguyen thi hong nhung', 'ts. nguyen thi hong nhung', 'nhung'],
+                    fullName: 'TS. Nguyễn Thị Hồng Nhung',
+                    gender: 'female',
+                    wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Cô vì những bài giảng tâm huyết, sinh động và đầy cảm hứng. Cô luôn tận tâm, gần gũi và quan tâm đến từng sinh viên, giúp chúng em không chỉ tiếp thu tri thức mà còn thêm tự tin và yêu thích môn học. Chúng em trân trọng tinh thần tận tụy và sự nhiệt huyết mà Cô luôn dành cho nghề, dành cho sinh viên. Kính chúc Cô luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp giảng dạy và nghiên cứu. Chúc Cô có một ngày 20/11 thật vui vẻ và ý nghĩa, ngập tràn niềm vui bên đồng nghiệp và học trò thân yêu.'
+                },
+                {
+                    keywords: ['ngo minh tuan', 'minh tuan', 'pgs.ts ngo minh tuan', 'pgs ngo minh tuan', 'tuan'],
+                    fullName: 'PGS.TS Ngô Minh Tuấn',
+                    gender: 'male',
+                    wish: 'Nhân dịp kỷ niệm Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin kính gửi đến Thầy lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Thầy vì những bài giảng đầy tâm huyết và nhiều kiến thức bổ ích. Với phong cách giảng dạy chuẩn mực và sự nghiêm túc nhưng gần gũi, tận tâm, Thầy đã giúp chúng em hình thành tinh thần kỷ luật, ý thức trách nhiệm và tác phong chuyên nghiệp trong học tập cũng như trong cuộc sống. Chúng em rất trân trọng hình ảnh người Thầy mẫu mực – vừa là người truyền dạy kiến thức, vừa là tấm gương sáng về nhân cách và tinh thần làm việc. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp giáo dục và nghiên cứu. Chúc Thầy có một ngày 20/11 thật vui vẻ, ý nghĩa và tự hào về hành trình gieo tri thức của mình.'
+                },
+                {
+                    keywords: ['le khanh hung', 'khanh hung', 'ths le khanh hung', 'th.s le khanh hung'],
+                    fullName: 'Th.S Lê Khánh Hưng',
+                    gender: 'male',
+                    wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin gửi đến Thầy lời chúc tốt đẹp và lòng tri ân sâu sắc nhất. Chúng em xin cảm ơn Thầy vì những bài giảng đầy tâm huyết, sự chu đáo và tinh thần tận tụy trong giảng dạy. Thầy luôn quan tâm, lắng nghe và đồng hành cùng sinh viên – giúp chúng em thêm tự tin, chủ động và hứng thú trong học tập. Chúng em trân trọng sự nhiệt tình và tinh thần trách nhiệm mà Thầy luôn dành cho lớp. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và đạt nhiều thành công trong sự nghiệp giảng dạy và nghiên cứu. Chúc Thầy có một ngày 20/11 thật vui vẻ và tràn đầy ý nghĩa.'
+                },
+                {
+                    keywords: ['son thanh tung', 'thanh tung', 'ts son thanh tung', 'ts. son thanh tung', 'tung'],
+                    fullName: 'TS. Sơn Thanh Tùng',
+                    gender: 'male',
+                    wish: 'Nhân ngày 20/11, tập thể lớp Quản trị Văn phòng K24 xin gửi đến Thầy lời chúc chân thành và lời cảm ơn sâu sắc. Chúng em xin cảm ơn Thầy vì sự tận tâm, gần gũi và tinh thần trách nhiệm trong giảng dạy. Thầy luôn sẵn lòng lắng nghe, hướng dẫn và hỗ trợ sinh viên tận tình. Chính điều đó đã giúp chúng em thêm yêu việc học và cảm thấy được thấu hiểu, đồng hành trong quá trình trưởng thành. Kính chúc Thầy luôn mạnh khỏe, bình an và đạt được nhiều thành công mới trong công việc cũng như trong cuộc sống. Chúc Thầy có một ngày Nhà giáo Việt Nam thật vui vẻ, ý nghĩa và đáng nhớ.'
+                },
+                {
+                    keywords: ['chau thanh duy', 'thanh duy', 'ths chau thanh duy', 'th.s chau thanh duy', 'duy'],
+                    fullName: 'Th.S Châu Thanh Duy',
+                    gender: 'male',
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin gửi đến Thầy lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Thầy vì sự nhiệt huyết, chu đáo và tinh thần trách nhiệm mà Thầy đã dành cho lớp trong suốt thời gian qua. Thầy không chỉ là người hướng dẫn trong học tập mà còn là người đồng hành đáng tin cậy, giúp chúng em định hướng, phát triển bản thân và vượt qua những khó khăn trong quá trình học tập. Chúng em luôn trân trọng sự tận tình, chân thành và ân cần của Thầy trong từng buổi gặp gỡ, từng lời chia sẻ. Nhân ngày đặc biệt này, chúng em kính chúc Thầy luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong công tác giảng dạy, nghiên cứu và cố vấn. Chúc Thầy có một ngày 20/11 thật ấm áp, ý nghĩa và tràn đầy niềm vui bên học trò và đồng nghiệp thân thương.'
+                },
+                {
+                    keywords: ['nguyen duc kim ngan', 'kim ngan', 'ngan'],
+                    fullName: 'Cô Nguyễn Đức Kim Ngân',
+                    gender: 'female',
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, lớp Quản trị Văn phòng K24 chúng em xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc. Cảm ơn Cô vì những bài giảng tận tâm, rõ ràng và giàu tính ứng dụng, giúp chúng em không chỉ nắm vững kiến thức mà còn hiểu hơn về cách vận dụng chúng trong thực tế công việc. Chúng em luôn ghi nhớ sự nhiệt huyết, sự chỉn chu và tinh thần trách nhiệm mà Cô dành cho lớp. Chúc Cô luôn mạnh khỏe, hạnh phúc và thật nhiều niềm vui trong hành trình giảng dạy. Kính chúc Cô có một ngày 20/11 thật trọn vẹn và ý nghĩa!'
+                },
+                {
+                    keywords: ['pham nguyen phuong quynh', 'phuong quynh', 'quynh'],
+                    fullName: 'Cô Phạm Nguyễn Phương Quỳnh',
+                    gender: 'female',
+                    wish: 'Nhân ngày Nhà giáo Việt Nam 20/11, chúng em xin gửi đến Cô lời tri ân chân thành nhất. Cảm ơn Cô đã mang đến cho chúng em những tiết học đầy sự tận tâm, logic và truyền cảm hứng, giúp chúng em tự tin hơn trong việc rèn luyện tư duy và kỹ năng nghề nghiệp. Chúng em rất trân trọng sự hỗ trợ, sự kiên nhẫn và tinh thần luôn đồng hành cùng sinh viên của Cô. Chúc Cô luôn dồi dào sức khỏe, bình an và thật nhiều niềm vui trong công việc cũng như cuộc sống. Kính chúc Cô một ngày 20/11 thật vui vẻ và đáng nhớ!'
+                },
+                {
+                    keywords: ['ho ngoc tram', 'ngoc tram', 'tram'],
+                    fullName: 'Cô Hồ Ngọc Trâm',
+                    gender: 'female',
+                    wish: 'Nhân dịp 20/11, chúng em xin gửi đến Cô lời chúc tốt đẹp và lời cảm ơn chân thành. Cảm ơn Cô đã luôn đem đến cho chúng em những bài giảng sinh động, dễ hiểu cùng sự quan tâm chu đáo trong suốt quá trình học tập. Những chia sẻ của Cô đã giúp chúng em trưởng thành hơn và tự tin hơn trong hành trình theo đuổi ngành nghề của mình. Chúng em vô cùng trân trọng sự tận tâm và nhiệt tình của Cô trong từng buổi học. Kính chúc Cô luôn khỏe mạnh, hạnh phúc và gặt hái nhiều thành công. Chúc Cô có một ngày 20/11 thật rạng rỡ và ý nghĩa!'
+                },
+                {
+                    keywords: ['do van thang', 'van thang', 'thang'],
+                    fullName: 'Thầy Đỗ Văn Thắng',
+                    gender: 'male',
+                    wish: 'Nhân ngày Nhà giáo Việt Nam 20/11, chúng em xin gửi đến Thầy lời chúc tốt đẹp cùng lòng biết ơn sâu sắc. Cảm ơn Thầy đã tận tụy đồng hành và truyền đạt cho chúng em những kiến thức thực tế, hữu ích và đầy tâm huyết. Sự nhiệt tình và tinh thần trách nhiệm của Thầy luôn là nguồn động lực lớn đối với chúng em. Chúng em trân trọng những bài học và sự hỗ trợ mà Thầy đã dành cho lớp trong suốt thời gian qua. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và thành công hơn nữa trong sự nghiệp giảng dạy. Chúc Thầy có một ngày 20/11 thật ấm áp và tràn đầy niềm vui!'
+                }
             ];
 
-            // Lời chúc cho cô giáo (nữ)
-            const femaleWishes = [
-                "Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến cô lời chúc sức khỏe dồi dào, hạnh phúc an lành. Cảm ơn cô đã luôn tận tâm truyền đạt kiến thức và yêu thương học trò! 🌹✨",
+            // === TÌM KIẾM THẦY CÔ DựA TRÊN TÊN ===
+            function findTeacher(inputName) {
+                const normalized = normalizeStr(inputName);
                 
-                "Kính chúc cô ngày 20/11 thật nhiều niềm vui và hạnh phúc! Những bài giảng của cô không chỉ là tri thức mà còn là nguồn cảm hứng cho em mỗi ngày. Cô mãi là người thầy tuyệt vời nhất! 📚💖",
-                
-                "Chúc cô luôn tràn đầy năng lượng, sức khỏe dồi dào và gặt hái nhiều thành công trong sự nghiệp cao quý. Em biết ơn vì đã được làm học trò của cô! 🎓🌟",
-                
-                "Gửi cô người em kính yêu, chúc mừng ngày Nhà giáo Việt Nam! Cảm ơn cô đã dành cả thanh xuân để hun đúc tri thức và tâm hồn cho thế hệ học trò. Cô là niềm tự hào của chúng em! 🏆💫",
-                
-                "Nhân dịp 20/11, em chúc cô luôn vui vẻ, mạnh khỏe và thành công rực rỡ! Những lời dạy của cô sẽ mãi là hành trang quý giá trên con đường trưởng thành của em. Yêu cô nhiều lắm! 💐🌈",
-                
-                "Chúc cô một ngày 20/11 thật ý nghĩa! Cô không chỉ là người thầy mà còn là người bạn, người định hướng cho cuộc đời em. Em sẽ luôn nhớ ơn và tự hào về cô! 🌸✨",
-                
-                "Kính gửi cô, nhân ngày Nhà giáo Việt Nam, em chúc cô luôn tươi trẻ, hạnh phúc và thành đạt! Cảm ơn cô đã luôn kiên nhẫn, tận tình và yêu thương chúng em! 🎊💝",
-                
-                "20/11 - ngày để em được bày tỏ lòng biết ơn sâu sắc đến cô. Chúc cô sức khỏe, bình an và luôn là ngọn đèn soi đường cho biết bao thế hệ học trò! 🕯️🌟",
-
-                "Cô ơi, ngày 20/11 này em chúc cô luôn tươi trẻ như ngày nào, nhiệt huyết với nghề và hạnh phúc bên gia đình. Cảm ơn cô đã là ánh sáng dẫn đường cho chúng em! 🌺💕",
-
-                "Gửi cô, người đã dạy em không chỉ kiến thức mà còn cách làm người. Chúc cô ngày Nhà giáo 20/11 thật ý nghĩa, luôn mạnh khỏe và thành công! Em sẽ luôn nhớ ơn cô! 🎯✨",
-
-                "Nhân ngày 20/11, em chúc cô luôn giữ được ngọn lửa đam mê với nghề, sức khỏe dồi dào và gặp nhiều may mắn. Cô là người thầy tuyệt vời nhất trong lòng em! 🔥🌟",
-
-                "Chúc mừng ngày Nhà giáo Việt Nam! Cô không chỉ truyền đạt tri thức mà còn truyền cảm hứng cho em mỗi ngày. Chúc cô luôn hạnh phúc và thành công rực rỡ! 🌈💖"
-            ];
-
-            // Hàm tạo hash từ tên
-            function hashCode(str) {
-                let hash = 0;
-                for (let i = 0; i < str.length; i++) {
-                    const char = str.charCodeAt(i);
-                    hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash;
+                // Tìm kiếm chính xác hoặc chứa keyword
+                for (let teacher of teacherData) {
+                    for (let keyword of teacher.keywords) {
+                        const normalizedKeyword = normalizeStr(keyword);
+                        if (normalized === normalizedKeyword || normalized.includes(normalizedKeyword)) {
+                            return teacher;
+                        }
+                    }
                 }
-                return Math.abs(hash);
+                
+                return null;
             }
 
-            // Hàm random có seed
-            function getRandomWishIndex(name, wishCount) {
-                const timestamp = Math.floor(Date.now() / 60000);
-                const nameHash = hashCode(name.toLowerCase().trim());
-                const seed = nameHash + timestamp;
-                const x = Math.sin(seed) * 10000;
-                const random = x - Math.floor(x);
-                return Math.floor(random * wishCount);
+            // === ĐIỀU KHIỂN NHẠC NỀN ===
+            musicControl.addEventListener('click', function() {
+                if (isPlaying) {
+                    bgMusic.pause();
+                    musicControl.classList.remove('playing');
+                    musicControl.querySelector('.music-icon').textContent = '🔇';
+                    isPlaying = false;
+                } else {
+                    bgMusic.play().catch(e => console.log('Không thể phát nhạc:', e));
+                    musicControl.classList.add('playing');
+                    musicControl.querySelector('.music-icon').textContent = '🔊';
+                    isPlaying = true;
+                }
+            });
+
+            // === PHÁO HOA ===
+            function createFirework(x, y) {
+                const colors = ['#ff6b35', '#e55234', '#ffd89b', '#74b9ff', '#4ecdc4', '#2ecc71'];
+                const particleCount = 30;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'firework';
+                    
+                    const angle = (Math.PI * 2 * i) / particleCount;
+                    const velocity = 100 + Math.random() * 100;
+                    
+                    const tx = Math.cos(angle) * velocity;
+                    const ty = Math.sin(angle) * velocity;
+                    
+                    particle.style.left = x + 'px';
+                    particle.style.top = y + 'px';
+                    particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.setProperty('--tx', tx + 'px');
+                    particle.style.setProperty('--ty', ty + 'px');
+                    
+                    fireworksContainer.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 1000);
+                }
             }
 
-            // Lấy lời chúc unique
-            function getUniqueWish(name, gender) {
-                const wishes = gender === 'male' ? maleWishes : femaleWishes;
-                const storageKey = 'wishHistory';
-                let history = JSON.parse(localStorage.getItem(storageKey) || '[]');
+            function launchFireworks() {
+                const count = 5;
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight * 0.5;
+                        createFirework(x, y);
+                    }, i * 300);
+                }
+            }
+
+            // === LƯU ẢNH ===
+            downloadBtn.addEventListener('click', async function() {
+                try {
+                    const cardElement = document.getElementById('main-card');
+                    
+                    // Tạm ẩn các nút action
+                    const actionButtons = document.querySelector('.action-buttons');
+                    const backBtn = document.querySelector('.back-button');
+                    actionButtons.style.display = 'none';
+                    backBtn.style.display = 'none';
+                    
+                    const canvas = await html2canvas(cardElement, {
+                        backgroundColor: null,
+                        scale: 2,
+                        logging: false,
+                        useCORS: true
+                    });
+                    
+                    // Hiện lại các nút
+                    actionButtons.style.display = 'flex';
+                    backBtn.style.display = 'inline-block';
+                    
+                    const link = document.createElement('a');
+                    const timestamp = new Date().getTime();
+                    link.download = `loi-chuc-20-11-${timestamp}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                    
+                    alert('✅ Đã lưu ảnh thành công!');
+                } catch (error) {
+                    console.error('Lỗi khi lưu ảnh:', error);
+                    alert('❌ Không thể lưu ảnh. Vui lòng thử lại!');
+                }
+            });
+
+            // === CHIA SẺ ===
+            shareBtn.addEventListener('click', function() {
+                const teacherName = recipientName.textContent;
+                const text = `🎓 Lời chúc 20/11 dành tặng ${teacherName}!\n\n✨ Xem lời chúc tại: ${window.location.href}`;
                 
-                if (history.length > 5) {
-                    history = history.slice(-5);
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Lời Chúc 20/11',
+                        text: text,
+                        url: window.location.href
+                    }).then(() => {
+                        console.log('Chia sẻ thành công!');
+                    }).catch(err => {
+                        console.log('Hủy chia sẻ');
+                    });
+                } else {
+                    // Fallback: Mở cửa sổ chia sẻ Facebook
+                    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
+                    window.open(fbUrl, '_blank', 'width=600,height=400');
+                }
+            });
+
+            // === COPY LINK ===
+            copyBtn.addEventListener('click', function() {
+                const url = window.location.href;
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        copyBtn.innerHTML = '✅ Đã copy!';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = '📋 Copy link';
+                        }, 2000);
+                    });
+                } else {
+                    // Fallback cho trình duyệt cũ
+                    const textarea = document.createElement('textarea');
+                    textarea.value = url;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    
+                    copyBtn.innerHTML = '✅ Đã copy!';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '📋 Copy link';
+                    }, 2000);
+                }
+            });
+
+            // Hiệu ứng typing - gõ chữ từng ký tự một
+            function typeWriter(text, element, speed = 50) {
+                element.innerHTML = '';
+                let index = 0;
+                const cursor = document.createElement('span');
+                cursor.className = 'typing-cursor';
+                element.appendChild(cursor);
+
+                function type() {
+                    if (index < text.length) {
+                        const char = text.charAt(index);
+                        const textNode = document.createTextNode(char);
+                        element.insertBefore(textNode, cursor);
+                        index++;
+                        typingTimeout = setTimeout(type, speed);
+                    } else {
+                        setTimeout(() => {
+                            cursor.remove();
+                        }, 500);
+                    }
                 }
 
-                let wishIndex;
-                let attempts = 0;
-                const maxAttempts = 20;
-
-                do {
-                    wishIndex = getRandomWishIndex(name + attempts, wishes.length);
-                    attempts++;
-                } while (history.includes(wishIndex) && attempts < maxAttempts);
-
-                if (attempts >= maxAttempts) {
-                    wishIndex = Math.floor(Math.random() * wishes.length);
-                }
-
-                history.push(wishIndex);
-                localStorage.setItem(storageKey, JSON.stringify(history));
-
-                return wishes[wishIndex];
+                type();
             }
 
             function createFallingIcon() {
@@ -399,25 +716,39 @@
                     return;
                 }
                 
-                // Nhận diện giới tính
-                const gender = detectGender(name);
+                // Tìm kiếm thông tin thầy cô
+                const teacher = findTeacher(name);
                 
-                // Lấy lời chúc phù hợp
-                const randomWish = getUniqueWish(name, gender);
+                if (!teacher) {
+                    alert("❌ Không tìm thấy thông tin thầy/cô này. Vui lòng kiểm tra lại tên!");
+                    return;
+                }
                 
                 // Hiển thị tên với xưng hô phù hợp
-                const title = gender === 'male' ? 'Thầy' : (gender === 'female' ? 'Cô' : 'Thầy/Cô');
+                const title = teacher.gender === 'male' ? 'Thầy' : 'Cô';
                 
-                recipientName.textContent = `${title} ${name}`;
-                wishMessage.textContent = randomWish;
+                recipientName.textContent = teacher.fullName;
                 promptContainer.style.display = 'none';
                 card.style.display = 'block';
+                
+                // Bắn pháo hoa
+                setTimeout(launchFireworks, 500);
+                
+                // Bắt đầu typing effect sau 500ms
+                setTimeout(() => {
+                    typeWriter(teacher.wish, wishMessage, 40);
+                }, 500);
             }
 
             function goBack() {
+                if (typingTimeout) {
+                    clearTimeout(typingTimeout);
+                }
+                
                 card.style.display = 'none';
                 promptContainer.style.display = 'block';
                 nameInput.value = '';
+                wishMessage.innerHTML = '';
                 nameInput.focus();
             }
 
