@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lời Chúc Đặc Biệt 20/11 📚</title>
     
-    <!-- html2canvas cho chức năng chụp ảnh -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
@@ -357,17 +356,14 @@
 </head>
 <body>
 
-    <!-- Điều khiển nhạc -->
     <div class="music-control" id="musicControl" title="Bật/Tắt nhạc nền">
         <span class="music-icon">🔇</span>
     </div>
 
-    <!-- Audio nhạc nền -->
     <audio id="bgMusic" loop>
         <source src="https://www.bensound.com/bensound-music/bensound-memories.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Container pháo hoa -->
     <div class="fireworks-container" id="fireworksContainer"></div>
 
     <div class="icon-container" id="icon-container"></div>
@@ -382,10 +378,8 @@
         <h1>📚 Chúc Mừng 20/11! 📚</h1>
         <p class="recipient-name fade-up">Kính gửi <span id="recipientName">...</span> 🌟</p>
         <p class="message fade-up" id="wishMessage">
-            <!-- Lời chúc sẽ được typing ở đây -->
-        </p>
+            </p>
         
-        <!-- Action Buttons -->
         <div class="action-buttons">
             <button class="action-btn download-btn" id="downloadBtn">
                 📸 Lưu ảnh
@@ -422,10 +416,17 @@
             let typingTimeout;
             let isPlaying = false;
 
-            // === Utility: normalize string (remove accents, lower-case) ===
+            // === Utility: normalize string (old fallback) ===
             function normalizeStr(s) {
                 if (!s) return '';
-                return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+                return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+            }
+
+            // === NEW: strip only Vietnamese tone marks but keep base letters like â, ă, ê, ô, ơ, ư ===
+            function stripToneOnly(s) {
+                if (!s) return '';
+                // NFD decomposes diacritics so we can remove tone marks (grave, acute, tilde, hook, dot)
+                return s.normalize('NFD').replace(/[\u0300\u0301\u0303\u0309\u0323]/g, '').toLowerCase().trim();
             }
 
             // === DỮ LIỆU THẦY CÔ VÀ LỜI CHÚC ===
@@ -440,7 +441,7 @@
                     keywords: ['nguyen van bau', 'bau', 'ts nguyen van bau', 'ts. nguyen van bau', 'van bau'],
                     fullName: 'TS. Nguyễn Văn Báu',
                     gender: 'male',
-                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy đã luôn tận tâm dẫn dắt và hỗ trợ lớp chúng em trong suốt quá trình học tập. Chúng em luôn cảm nhận được sự quan tâm và tâm huyết của Thầy đối với sự phát triển của ngành cũng như của từng sinh viên. Chúng em rất biết ơn sự lãnh đạo và những đóng góp của Thầy cho khoa và cho các lớp. Mong Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục đạt được nhiều thành công hơn nữa trong công việc và cuộc sống! Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy đã luôn tận tâm dẫn dắt và hỗ trợ lớp chúng em trong suốt quá trình học tập. Chúng em luôn cảm nhận được sự quan tâm và tâm huyết của Thầy đối với sự phát triển của ngành cũng như của từng sinh viên. Mong Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục đạt được nhiều thành công hơn nữa trong công việc và cuộc sống! Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
                 },
                 {
                     keywords: ['hoang quang cuong', 'cuong', 'ths hoang quang cuong', 'ths. hoang quang cuong', 'quang cuong'],
@@ -449,7 +450,7 @@
                     wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 chúng em xin gửi lời chúc trân trọng và biết ơn đến Thầy. Cảm ơn Thầy đã tận tâm giảng dạy và chia sẻ những kiến thức quý báu trong suốt thời gian qua. Những bài học của Thầy không chỉ giúp chúng em vững vàng hơn trong chuyên môn mà còn mở rộng thêm tầm nhìn và hiểu biết về nhiều vấn đề quan trọng trong công việc và cuộc sống. Chúng em luôn trân trọng những giá trị Thầy đã mang lại cho lớp, và cảm ơn Thầy vì sự nhiệt huyết, kiên nhẫn và sự quan tâm đặc biệt dành cho từng sinh viên. Chúc Thầy luôn khỏe mạnh, hạnh phúc, và tiếp tục gặt hái thêm nhiều thành công trong sự nghiệp giảng dạy. Chúc Thầy một ngày 20/11 thật vui vẻ và ý nghĩa!'
                 },
                 {
-                    keywords: ['tran ba hung', 'hung', 'ts tran ba hung', 'ts. tran ba hung', 'ba hung'],
+                    keywords: ['tran ba hung', 'ts tran ba hung', 'ts. tran ba hung', 'ba hung'],
                     fullName: 'TS. Trần Bá Hùng',
                     gender: 'male',
                     wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin gửi đến Thầy lời tri ân sâu sắc. Chúng em cảm ơn Thầy vì sự tận tâm giảng dạy và những kiến thức quý báu đã truyền đạt trong suốt thời gian qua. Những bài học của Thầy không chỉ củng cố chuyên môn mà còn mở rộng tư duy và hiểu biết của chúng em về công việc và cuộc sống. Chúng em trân trọng sự nhiệt huyết, kiên trì và sự quan tâm Thầy dành cho từng sinh viên. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và tiếp tục gặt hái nhiều thành công trong sự nghiệp trồng người.'
@@ -458,13 +459,13 @@
                     keywords: ['phan thi cam lai', 'cam lai', 'ts phan thi cam lai', 'ts. phan thi cam lai', 'lai'],
                     fullName: 'TS. Phan Thị Cẩm Lai',
                     gender: 'female',
-                    wish: 'Nhân ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin kính chúc Cô thật nhiều niềm vui, hạnh phúc và tiếp tục gặt hái nhiều thành công trong sự nghiệp cao quý của mình. Trong suốt quá trình học tập môn học Tư tưởng Hồ Chí Minh, chúng em thật may mắn khi được học tập và đồng hành cùng cô - Giảng viên tận tâm, dịu dàng và gần gũi. Cảm ơn Cô vì luôn quan tâm, thấu hiểu, đồng hành cùng chúng em trong quá trình học tập. Chúng em xin kính chúc Cô luôn mạnh khỏe, tươi trẻ và tiếp tục truyền cảm hứng cho nhiều thế hệ sinh viên sau này.'
+                    wish: 'Nhân ngày Nhà giáo ViệtANM 20/11, tập thể lớp Quản trị văn phòng K24 xin kính chúc Cô thật nhiều niềm vui, hạnh phúc và tiếp tục gặt hái nhiều thành công trong sự nghiệp cao quý của mình. Trong suốt quá trình học tập môn học Tư tưởng Hồ Chí Minh, chúng em thật may mắn khi được học tập và đồng hành cùng cô - Giảng viên tận tâm, dịu dàng và gần gũi. Cảm ơn Cô vì luôn quan tâm, thấu hiểu, đồng hành cùng chúng em trong quá trình học tập. Chúng em xin kính chúc Cô luôn mạnh khỏe, tươi trẻ và tiếp tục truyền cảm hứng cho nhiều thế hệ sinh viên sau này.'
                 },
                 {
                     keywords: ['nguyen thi hong nhung', 'hong nhung', 'ts nguyen thi hong nhung', 'ts. nguyen thi hong nhung', 'nhung'],
                     fullName: 'TS. Nguyễn Thị Hồng Nhung',
                     gender: 'female',
-                    wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Cô vì những bài giảng tâm huyết, sinh động và đầy cảm hứng. Cô luôn tận tâm, gần gũi và quan tâm đến từng sinh viên, giúp chúng em không chỉ tiếp thu tri thức mà còn thêm tự tin và yêu thích môn học. Chúng em trân trọng tinh thần tận tụy và sự nhiệt huyết mà Cô luôn dành cho nghề, dành cho sinh viên. Kính chúc Cô luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp giảng dạy và nghiên cứu. Chúc Cô có một ngày 20/11 thật vui vẻ và ý nghĩa, ngập tràn niềm vui bên đồng nghiệp và học trò thân yêu.'
+                    wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể Quản trị văn phòng K24 xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Cô vì những bài giảng tâm huyết, sinh động và đầy cảm hứng. Cô luôn tận tâm, gần gũi và quan tâm đến từng sinh viên, giúp chúng em không chỉ tiếp thu tri thức mà còn thêm tự tin và yêu thích môn học. Chúng em trân trọng tinh thần tận tụy và sự nhiệt huyết mà Cô luôn dành cho nghề, dành cho sinh viên. Kính chúc Cô luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp giảng dạy và nghiên cứu. Chúc Cô có một ngày 20/11 thật vui vẻ và ý nghĩa, ngập tràn niềm vui bên đồng nghiệp và học trò thân yêu.'
                 },
                 {
                     keywords: ['ngo minh tuan', 'minh tuan', 'pgs.ts ngo minh tuan', 'pgs ngo minh tuan', 'tuan'],
@@ -473,7 +474,7 @@
                     wish: 'Nhân dịp kỷ niệm Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin kính gửi đến Thầy lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Thầy vì những bài giảng đầy tâm huyết và nhiều kiến thức bổ ích. Với phong cách giảng dạy chuẩn mực và sự nghiêm túc nhưng gần gũi, tận tâm, Thầy đã giúp chúng em hình thành tinh thần kỷ luật, ý thức trách nhiệm và tác phong chuyên nghiệp trong học tập cũng như trong cuộc sống. Chúng em rất trân trọng hình ảnh người Thầy mẫu mực – vừa là người truyền dạy kiến thức, vừa là tấm gương sáng về nhân cách và tinh thần làm việc. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và thành công trong sự nghiệp giáo dục và nghiên cứu. Chúc Thầy có một ngày 20/11 thật vui vẻ, ý nghĩa và tự hào về hành trình gieo tri thức của mình.'
                 },
                 {
-                    keywords: ['le khanh hung', 'khanh hung', 'ths le khanh hung', 'th.s le khanh hung'],
+                    keywords: ['le khanh hung', 'khanh hung', 'ths le khanh hung', 'th.s le khanh hung', 'le khanh hưng', 'lê khánh hưng'],
                     fullName: 'ThS. Lê Khánh Hưng',
                     gender: 'male',
                     wish: 'Nhân dịp Ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 xin gửi đến Thầy lời chúc tốt đẹp và lòng tri ân sâu sắc nhất. Chúng em xin cảm ơn Thầy vì những bài giảng đầy tâm huyết, sự chu đáo và tinh thần tận tụy trong giảng dạy. Thầy luôn quan tâm, lắng nghe và đồng hành cùng sinh viên – giúp chúng em thêm tự tin, chủ động và hứng thú trong học tập. Chúng em trân trọng sự nhiệt tình và tinh thần trách nhiệm mà Thầy luôn dành cho lớp. Kính chúc Thầy luôn mạnh khỏe, hạnh phúc và đạt nhiều thành công trong sự nghiệp giảng dạy và nghiên cứu. Chúc Thầy có một ngày 20/11 thật vui vẻ và tràn đầy ý nghĩa.'
@@ -488,13 +489,13 @@
                     keywords: ['chau thanh duy', 'thanh duy', 'ths chau thanh duy', 'th.s chau thanh duy', 'duy'],
                     fullName: 'ThS. Châu Thanh Duy',
                     gender: 'male',
-                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị văn phòng K24 xin gửi đến Thầy lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Thầy vì sự nhiệt huyết, chu đáo và tinh thần trách nhiệm mà Thầy đã dành cho lớp trong suốt thời gian qua. Thầy không chỉ là người hướng dẫn trong học tập mà còn là người đồng hành đáng tin cậy, giúp chúng em định hướng, phát triển bản thân và vượt qua những khó khăn trong quá trình học tập. Chúng em luôn trân trọng sự tận tình, chân thành và ân cần của Thầy trong từng buổi gặp gỡ, từng lời chia sẻ. Nhân ngày đặc biệt này, chúng em kính chúc Thầy luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong công tác giảng dạy, nghiên cứu và cố vấn. Chúc Thầy có một ngày 20/11 thật ấm áp, ý nghĩa và tràn đầy niềm vui bên học trò và đồng nghiệp thân thương.'
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể Quản trị văn phòng K24 xin gửi đến Thầy lời chúc trân trọng và lòng biết ơn sâu sắc nhất. Chúng em xin cảm ơn Thầy vì sự nhiệt huyết, chu đáo và tinh thần trách nhiệm mà Thầy đã dành cho lớp trong suốt thời gian qua. Thầy không chỉ là người hướng dẫn trong học tập mà còn là người đồng hành đáng tin cậy, giúp chúng em định hướng, phát triển bản thân và vượt qua những khó khăn trong quá trình học tập. Chúng em luôn trân trọng sự tận tình, chân thành và ân cần của Thầy trong từng buổi gặp gỡ, từng lời chia sẻ. Nhân ngày đặc biệt này, chúng em kính chúc Thầy luôn mạnh khỏe, hạnh phúc và gặt hái nhiều thành công trong công tác giảng dạy, nghiên cứu và cố vấn. Chúc Thầy có một ngày 20/11 thật ấm áp, ý nghĩa và tràn đầy niềm vui bên học trò và đồng nghiệp thân thương.'
                 },
                 {
                     keywords: ['nguyen duc kim ngan', 'kim ngan', 'ngan'],
                     fullName: 'Cô Nguyễn Đức Kim Ngân',
                     gender: 'female',
-                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể lớp Quản trị Văn phòng K24 chúng em xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc. Cảm ơn Cô vì những bài giảng tận tâm, rõ ràng và giàu tính ứng dụng, giúp chúng em không chỉ nắm vững kiến thức mà còn hiểu hơn về cách vận dụng chúng trong thực tế công việc. Chúng em luôn ghi nhớ sự nhiệt huyết, sự chỉn chu và tinh thần trách nhiệm mà Cô dành cho lớp. Chúc Cô luôn mạnh khỏe, hạnh phúc và thật nhiều niềm vui trong hành trình giảng dạy. Kính chúc Cô có một ngày 20/11 thật trọn vẹn và ý nghĩa!'
+                    wish: 'Nhân dịp ngày Nhà giáo Việt Nam 20/11, tập thể Quản trị Văn phòng K24 chúng em xin gửi đến Cô lời chúc trân trọng và lòng biết ơn sâu sắc. Cảm ơn Cô vì những bài giảng tận tâm, rõ ràng và giàu tính ứng dụng, giúp chúng em không chỉ nắm vững kiến thức mà còn hiểu hơn về cách vận dụng chúng trong thực tế công việc. Chúng em luôn ghi nhớ sự nhiệt huyết, sự chỉn chu và tinh thần trách nhiệm mà Cô dành cho lớp. Chúc Cô luôn mạnh khỏe, hạnh phúc và thật nhiều niềm vui trong hành trình giảng dạy. Kính chúc Cô có một ngày 20/11 thật trọn vẹn và ý nghĩa!'
                 },
                 {
                     keywords: ['pham nguyen phuong quynh', 'phuong quynh', 'quynh'],
@@ -516,20 +517,70 @@
                 }
             ];
 
-            // === TÌM KIẾM THẦY CÔ DựA TRÊN TÊN ===
+            // === Hard-coded aliases for commonly-confused short inputs (optional) ===
+            // If user types exactly "hưng" (with ư) we prefer the teacher that actually has Hưng in fullName.
+            const aliasMap = {
+                'hưng': 'ThS. Lê Khánh Hưng',
+                'hùng': 'TS. Trần Bá Hùng'
+            };
+
+            // === TÌM KIẾM THẦY CÔ DỰA TRÊN TÊN (Cải tiến) ===
             function findTeacher(inputName) {
-                const normalized = normalizeStr(inputName);
-                
-                // Tìm kiếm chính xác hoặc chứa keyword
-                for (let teacher of teacherData) {
-                    for (let keyword of teacher.keywords) {
-                        const normalizedKeyword = normalizeStr(keyword);
-                        if (normalized === normalizedKeyword || normalized.includes(normalizedKeyword)) {
-                            return teacher;
+                const raw = (inputName || '').trim();
+                if (!raw) return null;
+
+                // 1) Exact alias match (short ambiguous inputs)
+                const lowerRaw = raw.toLowerCase();
+                if (aliasMap[lowerRaw]) {
+                    const fn = aliasMap[lowerRaw];
+                    const byFull = teacherData.find(t => t.fullName === fn);
+                    if (byFull) return byFull;
+                }
+
+                // 2) If user typed any non-ASCII character (likely typed Vietnamese diacritics),
+                //    do a stricter match that preserves base letters like ă, â, ê, ô, ơ, ư by removing only tone marks.
+                const hasNonAscii = /[^\u0000-\u007f]/.test(raw);
+                if (hasNonAscii) {
+                    const key = stripToneOnly(raw);
+
+                    // Try exact matching against teacher.fullName and keywords (after tone-stripping)
+                    for (let teacher of teacherData) {
+                        const fullStr = stripToneOnly(teacher.fullName);
+                        if (fullStr === key) return teacher;
+
+                        for (let keyword of teacher.keywords) {
+                            if (stripToneOnly(keyword) === key) return teacher;
+                        }
+                    }
+
+                    // Then try "includes" (word-level)
+                    for (let teacher of teacherData) {
+                        const fullStr = stripToneOnly(teacher.fullName);
+                        if (fullStr.includes(key)) return teacher;
+
+                        for (let keyword of teacher.keywords) {
+                            if (stripToneOnly(keyword).includes(key)) return teacher;
                         }
                     }
                 }
-                
+
+                // 3) Fallback to previous (diacritics-stripped) behavior for ASCII inputs
+                const normalized = normalizeStr(raw);
+
+                // Exact match first
+                for (let teacher of teacherData) {
+                    for (let keyword of teacher.keywords) {
+                        if (normalized === normalizeStr(keyword)) return teacher;
+                    }
+                }
+
+                // Then includes match
+                for (let teacher of teacherData) {
+                    for (let keyword of teacher.keywords) {
+                        if (normalizeStr(keyword).includes(normalized)) return teacher;
+                    }
+                }
+
                 return null;
             }
 
